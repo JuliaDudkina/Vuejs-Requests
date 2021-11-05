@@ -62,7 +62,7 @@ export default {
       //   rating: this.chosenRating,
       // });
       this.error = null;
-      fetch('https://vue-htttp-demo-7049c-default-rtdb.firebaseio.com/surveys', {
+      fetch('https://vue-htttp-demo-7049c-default-rtdb.firebaseio.com/surveys.json', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -71,8 +71,14 @@ export default {
             name: this.enteredName,
             rating: this.chosenRating
           }
-        }).catch(() => {
-          this.error = 'Something went wrong - try again later1';
+      }).then((response) => {
+          if(response.ok){
+            //....
+          } else{
+            throw new Error('Could not save data');
+          }
+      }).catch((error) => {
+          this.error = error.message;
       })
 
       this.enteredName = '';
