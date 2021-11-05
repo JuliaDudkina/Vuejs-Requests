@@ -51,6 +51,9 @@ export default {
 
     },
   },
+  mounted(){ // mounted hook insures that when DOM is loaded we execute loadExperiences
+    this.loadExperiences();
+  }
 };
 </script>
 
