@@ -38,7 +38,7 @@ export default {
   methods:{
     loadExperiences(){
       this.isLoading = true;
-      fetch('https://vue-htttp-demo-7049c-default-rtdb.firebaseio.com/surveys')
+      fetch('https://vue-htttp-demo-7049c-default-rtdb.firebaseio.com/surveys.json')
         .then((response) => {
           if(response.ok){
             return response.json();
