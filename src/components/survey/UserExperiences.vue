@@ -6,6 +6,9 @@
         <base-button @click='loadExperiences'>Load Submitted Experiences</base-button>
       </div>
       <p v-if='isLoading'>Loading...</p>
+      <p v-else-if='!isLoading && error'>{{ error }}</p>
+      <p v-else-if='!isLoading && (!results || results.length == 0 )'>
+      No stored experience found!</p>
       <ul v-else>
         <survey-result
           v-for="result in results"
@@ -29,12 +32,13 @@ export default {
     return{
       results: [],
       isLoading: false,
+      error: null,
     }
   },
   methods:{
     loadExperiences(){
       this.isLoading = true;
-      fetch('https://vue-htttp-demo-7049c-default-rtdb.firebaseio.com/surveys.json')
+      fetch('https://vue-htttp-demo-7049c-default-rtdb.firebaseio.com/surveys')
         .then((response) => {
           if(response.ok){
             return response.json();
@@ -52,7 +56,10 @@ export default {
         this.results = results; // therefore this will refer to general context
         // if we use function keyword, we'll get an error because 'this' will have local context and not refer to an array in data
       })
-
+      .catch(() => {
+        this.isLoading = false;
+        this.error = 'Failed. Try later.';
+      })
     },
   },
   mounted(){ // mounted hook insures that when DOM is loaded we execute loadExperiences
